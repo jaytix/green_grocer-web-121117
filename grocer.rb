@@ -15,15 +15,16 @@ end
 
 def apply_coupons(cart, coupons)
   coupons.each do |coupon|
-    if cart[coupon[:item]] && cart[coupon[:item]][:count] >= coupon[:num]
-      if cart["#{coupon[:item]} W/COUPON"]
-        cart["#{coupon[:item]} W/COUPON"][:count] += 1
+    itemInCoupon = coupon[:item]
+    if cart[itemInCoupon] && cart[itemInCoupon][:count] >= coupon[:num]
+      if cart["#{itemInCoupon} W/COUPON"]
+        cart["#{itemInCoupon} W/COUPON"][:count] += 1
       else
         binding.pry
-        cart["#{coupon[:item]} W/COUPON"] = {:count => 1, :price => coupon[:cost]}
-        cart["#{coupon[:item]} W/COUPON"][:clearance] = cart[coupon[:item]][clearance]
+        cart["#{itemInCoupon} W/COUPON"] = {:count => 1, :price => coupon[:cost]}
+        cart["#{itemInCoupon} W/COUPON"][:clearance] = cart[itemInCoupon][:clearance]
       end
-      cart[coupon[:item]][:count] -= coupon[:num]
+      cart[itemInCoupon][:count] -= coupon[:num]
     end
   end
   cart

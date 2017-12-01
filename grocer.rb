@@ -1,18 +1,16 @@
 require 'pry'
 
 def consolidate_cart(cart)
-  hash = Hash.new
-  cart.each do |cartItem|
-    cartItem.each do |item, attributes|
-      if hash.keys.include?(item)
-        hash[item][:count] += 1
+  cart.each_with_object({}) do |item, result|
+    item.each do |type, attributes|
+      if result[type]
+        attributes[:count] += 1
       else
-        hash[item] = attributes
-        hash[item][:count] = 1
+        result[type] = attributes
+        attributes[:count] = 1
       end
     end
   end
-  hash
 end
 
 def apply_coupons(cart, coupons)
